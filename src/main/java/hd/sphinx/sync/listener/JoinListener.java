@@ -68,13 +68,13 @@ public class JoinListener implements Listener {
 
         player.sendMessage(ConfigManager.getColoredString("messages.loading"));
         Bukkit.getPluginManager().callEvent(new ProcessingLoadingPlayerDataEvent(player, new SyncSettings()));
+        MainManageData.sendMessage("&6&l[데이터] &f: &a&l"+ player.getName() +"&f님의 데이터를 불러오고 있습니다.", player);
         Bukkit.getScheduler().runTaskLater(Main.main, new Runnable() {
             @Override
             public void run() {
-                MainManageData.sendMessage("&6&l[데이터] &f: &a&l"+ player.getName() +"&f님의 데이터를 불러오고 있습니다.", player);
-
                 MainManageData.loadPlayer(player);
                 loadPlayerData.put(player.getUniqueId(), true);
+                MainManageData.sendMessage("&6&l[데이터] &f: &a&l"+ player.getName() +"&f님의 데이터 로딩이 완료 되었습니다.", player);
             }
         }, 20 * 5);
     }
