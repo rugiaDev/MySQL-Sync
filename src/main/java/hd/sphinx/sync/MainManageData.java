@@ -10,9 +10,12 @@ import hd.sphinx.sync.mysql.MySQL;
 import hd.sphinx.sync.util.ConfigManager;
 import hd.sphinx.sync.util.InventoryManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -130,6 +133,34 @@ public class MainManageData {
         }
     }
 
+    public static boolean isEmptyItem(ItemStack itemStack) {
+        return (itemStack == null || itemStack.getType() == Material.AIR);
+    }
+
+    public static boolean isEmptyPlayerInventory(Player player) {
+        for (int i = 0; i < player.getInventory().getContents().length; i++) {
+            if (i < 36) {
+                ItemStack item = player.getInventory().getContents()[i];
+                if(isEmptyItem(item)) return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static void dropItem(Player player, Location location, ItemStack itemStack) {
+        Location l = location.clone();
+        player.getWorld().dropItem(l.add(0.5, 0.5, 0.5), itemStack).setVelocity(new Vector(0, 0, 0));
+    }
+
+    public static String color(String s) {
+        return ChatColor.translateAlternateColorCodes('&', s);
+    }
+
+    public static void sendMessage(String message, Player player) {
+        player.sendMessage(color(message));
+    }
+
     public static void savePlayer(Player player) {
         if (DeathListener.deadPlayers.contains(player)) {
             player.getInventory().clear();
@@ -137,8 +168,18 @@ public class MainManageData {
             player.setFoodLevel(20);
             player.setLevel(0);
         }
+
         try {
-            player.getInventory().addItem(player.getItemOnCursor());
+            ItemStack itemStack = player.getItemOnCursor();
+            if (!isEmptyItem(itemStack)) {
+                if (isEmptyPlayerInventory(player)) {
+                    player.getInventory().addItem(itemStack);
+                } else {
+                    dropItem(player, player.getLocation(), itemStack);
+                    sendMessage("&6&l[데이터] &f: 데이터 세이브 과정에 손에 든 아이템이 바닥에 떨어졌습니다.", player);
+                }
+            }
+
             player.setItemOnCursor(new ItemStack(Material.AIR));
         } catch (Exception ignored) { }
         if (storageType == StorageType.MYSQL) {
@@ -150,7 +191,16 @@ public class MainManageData {
 
     public static void savePlayer(Player player, CustomSyncSettings customSyncSettings) {
         try {
-            player.getInventory().addItem(player.getItemOnCursor());
+            ItemStack itemStack = player.getItemOnCursor();
+            if (!isEmptyItem(itemStack)) {
+                if (isEmptyPlayerInventory(player)) {
+                    player.getInventory().addItem(itemStack);
+                } else {
+                    dropItem(player, player.getLocation(), itemStack);
+                    sendMessage("&6&l[데이터] &f: 데이터 세이브 과정에 손에 든 아이템이 바닥에 떨어졌습니다.", player);
+                }
+            }
+
             player.setItemOnCursor(new ItemStack(Material.AIR));
         } catch (Exception ignored) { }
         if (storageType == StorageType.MYSQL) {

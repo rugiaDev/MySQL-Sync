@@ -6,10 +6,17 @@
 
     <groupId>MySQL-Sync</groupId>
     <artifactId>MySQL-Sync</artifactId>
-    <version>1.2.1</version>
+    <version>1.4.9</version>
     <packaging>jar</packaging>
 
-    <name>MySQL-Sync</name>
+    <name>${project.groupId}:${project.artifactId}</name>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
 
     <description>Syncs Player Data between Servers</description>
     <properties>
@@ -75,6 +82,11 @@
             <artifactId>spigot-api</artifactId>
             <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.7.0-rc0</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>

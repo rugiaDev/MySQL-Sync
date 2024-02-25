@@ -9,8 +9,5 @@
         <module name="MySQL-Sync" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="MySQL-Sync" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
