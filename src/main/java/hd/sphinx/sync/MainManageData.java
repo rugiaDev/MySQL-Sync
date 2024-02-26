@@ -176,7 +176,7 @@ public class MainManageData {
                     player.getInventory().addItem(itemStack);
                 } else {
                     dropItem(player, player.getLocation(), itemStack);
-                    sendMessage("&6&l[데이터] &f: 데이터 세이브 과정에 손에 든 아이템이 바닥에 떨어졌습니다.", player);
+                    sendMessage("&6&l[데이터] &f데이터 세이브 과정에 손에 든 아이템이 바닥에 떨어졌습니다.", player);
                 }
             }
 
@@ -197,7 +197,7 @@ public class MainManageData {
                     player.getInventory().addItem(itemStack);
                 } else {
                     dropItem(player, player.getLocation(), itemStack);
-                    sendMessage("&6&l[데이터] &f: 데이터 세이브 과정에 손에 든 아이템이 바닥에 떨어졌습니다.", player);
+                    sendMessage("&6&l[데이터] &f데이터 세이브 과정에 손에 든 아이템이 바닥에 떨어졌습니다.", player);
                 }
             }
 

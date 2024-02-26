@@ -7,6 +7,7 @@ import hd.sphinx.sync.api.SyncSettings;
 import hd.sphinx.sync.api.events.CompletedLoadingPlayerDataEvent;
 import hd.sphinx.sync.api.events.SavingPlayerDataEvent;
 import hd.sphinx.sync.backup.CustomSyncSettings;
+import hd.sphinx.sync.listener.JoinListener;
 import hd.sphinx.sync.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -177,7 +178,8 @@ public class ManageMySQLData {
     }
 
     public static void savePlayer(Player player, String invBase64, String ecBase64) {
-        if (MainManageData.loadedPlayerData.contains(player)) return;
+        if (MainManageData.loadedPlayerData.contains(player) || JoinListener.loadPlayerDataMap.get(player.getUniqueId()) == null) return;
+
         if (!MySQL.isConnected()) {
             MySQL.connectMySQL();
         }
@@ -280,7 +282,8 @@ public class ManageMySQLData {
     }
 
     public static void savePlayer(Player player, CustomSyncSettings customSyncSettings) {
-        if (MainManageData.loadedPlayerData.contains(player)) return;
+        if (MainManageData.loadedPlayerData.contains(player) || JoinListener.loadPlayerDataMap.get(player.getUniqueId()) == null) return;
+
         if (!MySQL.isConnected()) {
             MySQL.connectMySQL();
         }

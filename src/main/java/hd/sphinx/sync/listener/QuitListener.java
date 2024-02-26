@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class QuitListener implements Listener {
 
@@ -14,7 +13,7 @@ public class QuitListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         if (ConfigManager.getBoolean("settings.onlySyncPermission") && !player.hasPermission("sync.sync")) return;
-        JoinListener.loadPlayerData.remove(player.getUniqueId());
+        JoinListener.loadPlayerDataMap.remove(player.getUniqueId());
 
         if (!MainManageData.loadedPlayerData.contains(player)) {
             MainManageData.savePlayer(player);
