@@ -13,12 +13,15 @@ public class QuitListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         if (ConfigManager.getBoolean("settings.onlySyncPermission") && !player.hasPermission("sync.sync")) return;
-        JoinListener.loadPlayerDataMap.remove(player.getUniqueId());
 
-        if (!MainManageData.loadedPlayerData.contains(player)) {
-            MainManageData.savePlayer(player);
-        } else {
-            MainManageData.loadedPlayerData.remove(player);
-        }
+        try {
+            if (!MainManageData.loadedPlayerData.contains(player)) {
+                MainManageData.savePlayer(player);
+            } else {
+                MainManageData.loadedPlayerData.remove(player);
+            }
+        } catch (Exception e) {}
+
+        JoinListener.loadPlayerDataMap.remove(player.getUniqueId());
     }
 }

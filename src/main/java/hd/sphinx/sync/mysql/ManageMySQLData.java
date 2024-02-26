@@ -178,7 +178,7 @@ public class ManageMySQLData {
     }
 
     public static void savePlayer(Player player, String invBase64, String ecBase64) {
-        if (MainManageData.loadedPlayerData.contains(player) || JoinListener.loadPlayerDataMap.get(player.getUniqueId()) == null) return;
+        if (MainManageData.loadedPlayerData.contains(player)) return;
 
         if (!MySQL.isConnected()) {
             MySQL.connectMySQL();
@@ -282,7 +282,7 @@ public class ManageMySQLData {
     }
 
     public static void savePlayer(Player player, CustomSyncSettings customSyncSettings) {
-        if (MainManageData.loadedPlayerData.contains(player) || JoinListener.loadPlayerDataMap.get(player.getUniqueId()) == null) return;
+        if (MainManageData.loadedPlayerData.contains(player)) return;
 
         if (!MySQL.isConnected()) {
             MySQL.connectMySQL();
