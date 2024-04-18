@@ -9,10 +9,7 @@ import hd.sphinx.sync.mysql.ManageMySQLData;
 import hd.sphinx.sync.mysql.MySQL;
 import hd.sphinx.sync.util.ConfigManager;
 import hd.sphinx.sync.util.InventoryManager;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -162,11 +159,16 @@ public class MainManageData {
     }
 
     public static void savePlayer(Player player) {
+        World world = player.getWorld();
         if (DeathListener.deadPlayers.contains(player)) {
             player.getInventory().clear();
             player.setHealth(20);
             player.setFoodLevel(20);
             player.setLevel(0);
+        } else if (world.getName().contains("tutorial")) {
+            player.getInventory().clear();
+            player.setHealth(20);
+            player.setFoodLevel(20);
         }
 
         try {
@@ -182,6 +184,7 @@ public class MainManageData {
 
             player.setItemOnCursor(new ItemStack(Material.AIR));
         } catch (Exception ignored) { }
+
         if (storageType == StorageType.MYSQL) {
             ManageMySQLData.savePlayer(player, InventoryManager.saveItems(player, player.getInventory()), InventoryManager.saveEChest(player));
         } else if (storageType == StorageType.MONGODB) {
