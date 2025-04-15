@@ -7,7 +7,6 @@ import hd.sphinx.sync.api.SyncSettings;
 import hd.sphinx.sync.api.events.CompletedLoadingPlayerDataEvent;
 import hd.sphinx.sync.api.events.SavingPlayerDataEvent;
 import hd.sphinx.sync.backup.CustomSyncSettings;
-import hd.sphinx.sync.listener.JoinListener;
 import hd.sphinx.sync.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -149,7 +148,7 @@ public class ManageMySQLData {
                 result = resultSet.getString("statistics");
                 try {
                     if (result != null && ConfigManager.getBoolean("settings.syncing.statistics")) {
-                       syncProfile.setRawStatistics(StatisticsManager.loadPlayerStatistics(player, result));
+                        syncProfile.setRawStatistics(StatisticsManager.loadPlayerStatistics(player, result));
                     }
                 } catch (Exception ignored) { }
                 player.sendMessage(ConfigManager.getColoredString("messages.loaded"));
